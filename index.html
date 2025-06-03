@@ -21,8 +21,23 @@
 /* ========= figures ========= */
 .fig-img   {max-width:100%;height:auto;}
 .fig-cap   {text-align:center;font-weight:600;margin:-.25rem 0 1.25rem;font-size:.9rem;}
-
+/* 强制 DataTables 表头居中显示 */
+#vqa-table thead th {
+    text-align: center !important;
+  }
   </style>
+  <!-- Bootstrap JS (optional) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+
+<!-- jQuery (必须放在最前) -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+<!-- DataTables 样式与脚本 -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/dataTables.bootstrap5.min.css">
+<script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.8/js/dataTables.bootstrap5.min.js"></script>
+
 </head>
 
 <body>
@@ -63,7 +78,95 @@
   
 <!-- ===== Authors & Affiliations (updated) ===== -->
   <main class="container">
-    <img src="assets/L1.jpg" alt="Experimental results on each sphere" class="fig-img rounded shadow-sm d-block mx-auto" style="zoom: 50%;">
+    <!-- <img src="assets/L1.jpg" alt="Experimental results on each sphere" class="fig-img rounded shadow-sm d-block mx-auto" style="zoom: 50%;"> -->
+
+<!-- ===== Benchmark Results (sortable) ===== -->
+<h2 id="benchmark" class="section-title">Benchmark Results (VQA)</h2>
+
+<table id="vqa-table" class="table table-bordered  table-hover text-center align-middle">
+<!-- <table id="vqa-table" class="table table-bordered table-striped table-hover text-center align-middle"> -->
+  <thead class="table-light">
+    <tr>
+      <th>Method</th>
+      <th>Cross-sphere</th>
+      <th>Atmosphere</th>
+      <th>Lithosphere</th>
+      <th>Oceansphere</th>
+      <th>Cryosphere</th>
+      <th>Biosphere</th>
+      <th>Human-activities</th>
+      <th>Avg.</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- Experts -->
+    <tr class="table-success fw-semibold expert-row">
+        <td>Experts</td><td>90</td><td>96</td><td>91</td><td>95</td><td>93</td><td>97</td><td>95</td><td>93.4</td>
+    </tr>
+
+
+    <!-- Closed-source -->
+    <tr class="table-secondary">
+      <td>Claude-3.7-Sonnet</td><td>30.68</td><td>24.72</td><td>28.15</td><td>23.12</td><td>54.46</td><td>31.21</td><td>11.18</td><td>29.07</td>
+    </tr>
+    <tr class="table-secondary">
+      <td>Gemini-2.0</td><td>16.93</td><td>20.83</td><td><strong>38.94</strong></td><td>16.94</td><td><u>58.52</u></td><td>20.83</td><td>23.74</td><td>28.10</td>
+    </tr>
+    <tr class="table-secondary">
+      <td>GPT-4o</td><td>0.04</td><td>9.64</td><td>12.80</td><td>13.35</td><td>37.48</td><td>1.97</td><td>2.76</td><td>11.15</td>
+    </tr>
+
+    <!-- Open-source -->
+    <tr>
+      <td>InternVL3-72B</td><td>19.19</td><td><strong>33.98</strong></td><td>23.39</td><td>20.22</td><td><strong>74.56</strong></td><td><u>31.99</u></td><td><u>29.46</u></td><td><strong>33.26</strong></td>
+    </tr>
+    <tr>
+      <td>InternVL3-7B</td><td><strong>42.85</strong></td><td>30.10</td><td><u>37.47</u></td><td>20.28</td><td>49.27</td><td>28.74</td><td>23.18</td><td><u>33.13</u></td>
+    </tr>
+    <tr>
+      <td>LLaVA-Onevision-7B</td><td>19.26</td><td><u>33.69</u></td><td>28.72</td><td><strong>24.54</strong></td><td>46.40</td><td><strong>37.31</strong></td><td><strong>30.62</strong></td><td>31.51</td>
+    </tr>
+    <tr>
+      <td>InternLM-XComposer-2.5-7B</td><td>19.78</td><td>17.45</td><td>28.88</td><td>21.06</td><td>40.04</td><td>30.67</td><td>24.76</td><td>26.09</td>
+    </tr>
+    <tr>
+      <td>Qwen 2.5-VL-7B</td><td>9.85</td><td>9.25</td><td>18.65</td><td>13.95</td><td>17.85</td><td>10.94</td><td>6.23</td><td>12.39</td>
+    </tr>
+    <tr>
+      <td>Qwen 2.5-VL-72B</td><td>3.92</td><td>4.82</td><td>22.43</td><td>16.27</td><td>5.88</td><td>14.91</td><td>8.63</td><td>10.98</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- <script>
+  /* ---------- activate DataTables ---------- */
+  $(function () {
+    $('#vqa-table').DataTable({
+      paging: false,
+      info: false,
+      fixedHeader: true
+    });
+  });
+</script> -->
+<script>
+    $(document).ready(function () {
+      const table = $('#vqa-table').DataTable({
+        order: [[8, 'desc']],   // 第一次加载或刷新后按 Avg. 列（索引 8）降序
+        paging: false,
+        info:   false,
+        fixedHeader: true
+      });
+  
+      /* 让 Experts 行始终置顶、不参与排序 */
+      table.on('order.dt draw.dt', function () {
+        $('#vqa-table tbody tr.expert-row').prependTo('#vqa-table tbody');
+      });
+    });
+  </script>
+  
+  
+
+
 
     <!-- ======= Abstract ======= -->
     <!-- <h2 class="section-title">Abstract</h2>
@@ -171,7 +274,6 @@
     </footer>
   </main>
 
-  <!-- Bootstrap JS (optional) -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>
