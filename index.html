@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>OmniEarth-Bench</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Bootstrap 5 CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom styles -->
+  <style>
+    body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
+    .hero{background:#0d6efd;color:#fff;padding:5rem 1rem;margin-bottom:3rem;border-radius:.75rem}
+    .hero h1{font-size:2.75rem;font-weight:700}
+    .section-title{border-left:.25rem solid #0d6efd;padding-left:.5rem;margin-top:2rem;margin-bottom:1rem;font-weight:600}
+    pre{background:#f8f9fa;padding:1rem;border-radius:.5rem}
+    .badge-sphere{margin:.1rem}
+    /* ========= hero refinements ========= */
+.hero .tagline {font-size:1.2rem; font-weight:500; line-height:1.35;}
+.hero .authors {font-size:.95rem; line-height:1.4; max-width:960px; margin:0 auto 1.25rem;}
+.hero .affils  {font-size:.9rem;  line-height:1.4;  max-width:880px; margin:0 auto 2rem;}
+/* ========= figures ========= */
+.fig-img   {max-width:100%;height:auto;}
+.fig-cap   {text-align:center;font-weight:600;margin:-.25rem 0 1.25rem;font-size:.9rem;}
+
+  </style>
+</head>
+
+<body>
+  <!-- ======= Hero ======= -->
+  <section class="hero text-center">
+    <h1>OmniEarth-Bench</h1>
+    <p class="tagline mb-3">
+        Towards Holistic Evaluation of Earth's Six Spheres and Cross-Spheres Interactions&nbsp;<br/>
+        with Multimodal Observational Earth Data
+    </p>
+  
+    <!-- =========== authors =========== -->
+    <div class="authors">
+      Fengxiang Wang<sup>1,2</sup>, Mingshuo Chen<sup>3</sup>, Xuming He<sup>2,4</sup>, Yi-Fan Zhang<sup>9</sup><br/>
+      Feng Liu<sup>2,5</sup>, Zijie Guo<sup>6</sup>, Zhenghao Hu<sup>7</sup>, Jiong Wang<sup>2,6</sup>, Jingyi Xu<sup>2,6</sup><br/>
+      Zhangrui Li<sup>2,8</sup>, Fenghua Ling<sup>2</sup>, Ben Fei<sup>2</sup>, Weijia Li<sup>7</sup><br/>
+      Long Lan<sup>1</sup>, Wenjing Yang<sup>1&nbsp;†</sup>, Wenlong Zhang<sup>2&nbsp;†</sup>, Lei Bai<sup>2</sup>
+    </div>
+  
+    <!-- =========== affiliations =========== -->
+    <div class="affils">
+      <sup>1</sup> National University of Defense Technology, China,&nbsp;
+      <sup>2</sup> Shanghai Artificial Intelligence Laboratory, China,&nbsp;<br/>
+      <sup>3</sup> Beijing University of Posts and Telecommunications, China,&nbsp;
+      <sup>4</sup> Zhejiang University, China,<br/>
+      <sup>5</sup> Shanghai Jiao Tong University, China,&nbsp;
+      <sup>6</sup> Fudan University, China,&nbsp;
+      <sup>7</sup> Sun Yat-sen University, China,<br/>
+      <sup>8</sup> Nanjing University, China,&nbsp;
+      <sup>9</sup> Chinese Academy of Sciences, China
+    </div>
+  
+    <!-- =========== links =========== -->
+    <a class="btn btn-light btn-lg m-1" href="https://arxiv.org/abs/2505.23522" target="_blank" rel="noopener">📄 Paper</a>
+    <a class="btn btn-light btn-lg m-1" href="https://github.com/nanocm/OmniEarth-Bench" target="_blank" rel="noopener">💻 Code</a>
+    <a class="btn btn-light btn-lg m-1" href="https://huggingface.co/datasets/initiacms/OmniEarth-Bench" target="_blank" rel="noopener">📦 Dataset</a>
+  </section>
+  
+<!-- ===== Authors & Affiliations (updated) ===== -->
+  <main class="container">
+
+    <!-- ======= Abstract ======= -->
+    <h2 class="section-title">Abstract</h2>
+    <p>
+      <em>OmniEarth-Bench</em> is the first comprehensive multimodal benchmark that spans <strong>all six Earth-science spheres</strong>
+      (Atmosphere, Lithosphere, Oceansphere, Cryosphere, Biosphere, Human-Activities) plus cross-sphere tasks,
+      providing <strong>100 expert-curated evaluation dimensions</strong> and <strong>29,779 annotations</strong>
+      across four reasoning tiers (perception, general reasoning, scientific-knowledge reasoning, and chain-of-thought reasoning).
+      Experiments on nine state-of-the-art multimodal large language models reveal that none surpass 35 % accuracy,
+      with leading models such as GPT-4o dropping to 0 % on some cross-sphere tasks, highlighting the challenge and
+      setting a new standard for geosystem-aware AI.
+    </p>
+
+    <!-- ======= Benchmark Coverage ======= -->
+    <h2 class="section-title">Benchmark Coverage</h2>
+    <p>OmniEarth-Bench evaluates models over six spheres and cross-sphere interactions:</p>
+    <div>
+      <span class="badge rounded-pill text-bg-primary badge-sphere">Atmosphere 🌤️</span>
+      <span class="badge rounded-pill text-bg-primary badge-sphere">Lithosphere 🏔️</span>
+      <span class="badge rounded-pill text-bg-primary badge-sphere">Oceansphere 🌊</span>
+      <span class="badge rounded-pill text-bg-primary badge-sphere">Cryosphere ❄️</span>
+      <span class="badge rounded-pill text-bg-primary badge-sphere">Biosphere 🌳</span>
+      <span class="badge rounded-pill text-bg-primary badge-sphere">Human Activities 🏙️</span>
+      <span class="badge rounded-pill text-bg-primary badge-sphere">Cross-Sphere 🔄</span>
+      <!-- <span class="badge rounded-pill text-bg-secondary badge-sphere">Cross-Sphere 🔄</span> -->
+    </div>
+
+    <!-- ======= Data & Tasks ======= -->
+    <h2 class="section-title">Data & Tasks</h2>
+    <ul>
+      <li><strong>Observations:</strong> Satellite imagery &amp; in-situ measurements</li>
+      <li><strong>Annotations:</strong> 2–5 domain experts / sphere + 40 crowd-workers</li>
+      <li><strong>Task types:</strong> QA, VQA, captioning, retrieval, spatio-temporal reasoning, chain-of-thought, and more</li>
+      <li><strong>Total evaluation dimensions:</strong> 100</li>
+    </ul>
+
+    <!-- ===== Dataset Overview ===== -->
+<h2 id="dataset-overview" class="section-title">Dataset Overview</h2>
+
+<img src="assets/overview.jpg" alt="Overview of OmniEarth-Bench" class="fig-img rounded shadow-sm d-block mx-auto" style="zoom: 45%;">
+<p class="fig-cap">Fig&nbsp;1.&nbsp;Overview of OmniEarth-Bench.</p>
+
+<p>
+  We introduce <strong>OmniEarth-Bench</strong>, the first comprehensive multimodal benchmark spanning all six Earth-science spheres
+  (<em>atmosphere, lithosphere, oceansphere, cryosphere, biosphere, human-activities</em>)
+  and <em>cross-sphere</em> scenarios with one&nbsp;hundred expert-curated evaluation dimensions.
+  Leveraging observational data from satellite sensors and in-situ measurements, OmniEarth-Bench integrates
+  <strong>29 779 annotations</strong> across four tiers: perception, general reasoning, scientific-knowledge reasoning, and chain-of-thought (CoT) reasoning.
+</p>
+
+<ul>
+  <li><strong>Comprehensive Evaluation Across All Six Spheres.</strong> 58 practical evaluation dimensions that significantly surpass prior benchmarks.</li>
+  <li><strong>Pioneering Cross-Sphere Evaluation Dimensions.</strong> Addresses complex tasks such as disaster prediction and ecological forecasting.</li>
+  <li><strong>CoT-Based Reasoning Evaluations.</strong> Establishes, for the first time, CoT-based assessments tailored to Earth-science reasoning.</li>
+</ul>
+
+
+<!-- ===== Dataset Details ===== -->
+<h2 id="dataset" class="section-title">Dataset</h2>
+
+<h3 class="mt-3">Comparison &amp; Examples</h3>
+
+<img src="assets/comparison.jpg" alt="Comparison with existing benchmarks" class="fig-img rounded shadow-sm d-block mx-auto" style="zoom: 50%;">
+<p class="fig-cap">Fig&nbsp;2.&nbsp;Comparison with existing benchmarks.</p>
+
+<p>
+  OmniEarth-Bench defines tasks across four hierarchical levels (L1–L4): 7&nbsp;L1 spheres, 23&nbsp;L2 dimensions,
+  4&nbsp;L3 dimensions and 103 expert-defined L4 subtasks with real-world applicability.
+</p>
+
+<img src="assets/example.jpg" alt="Examples of OmniEarth-Bench" class="fig-img rounded shadow-sm d-block mx-auto" style="zoom: 45%;">
+<p class="fig-cap">Fig&nbsp;3.&nbsp;Representative L4 subtasks from each sphere.</p>
+
+
+<h3 class="mt-4">Benchmark Results</h3>
+
+<p>For detailed results on every dimension, please refer to the paper appendix.</p>
+
+<img src="assets/L1.jpg" alt="Experimental results on each sphere" class="fig-img rounded shadow-sm d-block mx-auto" style="zoom: 50%;">
+<p class="fig-cap">Fig&nbsp;4.&nbsp;Experimental results on each sphere of VQA tasks.</p>
+
+<p class="text-center small fst-italic mb-2">Following MME-CoT, precision, recall and F1 are reported on CoT tasks:</p>
+
+<img src="assets/CoT.jpg" alt="CoT performance" class="fig-img rounded shadow-sm d-block mx-auto" style="zoom: 45%;">
+<p class="fig-cap">Fig&nbsp;5.&nbsp;CoT performance on OmniEarth-Bench.</p>
+
+
+    <!-- ===== Quick Start ===== -->
+    <h2 class="section-title">Benchmark Quickstart</h2>
+    <p class="fw-semibold">Please refer to <a href="https://github.com/nanocm/OmniEarth-Bench/tree/main/evaluation" target="_blank">evaluation</a></p>
+
+
+    <!-- ======= Citation ======= -->
+    <h2 class="section-title">Citation</h2>
+<pre>@article{wang2025omniearth,
+  title   = {OmniEarth-Bench: Towards Holistic Evaluation of Earth's Six Spheres and Cross-Spheres Interactions with Multimodal Observational Earth Data},
+  author  = {Fengxiang Wang and Mingshuo Chen and Xuming He and others},
+  journal = {arXiv preprint arXiv:2505.23522},
+  year    = {2025}
+}</pre>
+
+    <!-- ======= Footer ======= -->
+    <footer class="text-center mt-5 mb-4">
+      <p class="mb-0">© 2025 OmniEarth-Bench Team · Last&nbsp;updated 2025-06-03</p>
+    </footer>
+  </main>
+
+  <!-- Bootstrap JS (optional) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
