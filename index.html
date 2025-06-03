@@ -99,12 +99,6 @@
     </tr>
   </thead>
   <tbody>
-    <!-- Experts -->
-    <tr class="table-success fw-semibold expert-row">
-        <td>Experts</td><td>90</td><td>96</td><td>91</td><td>95</td><td>93</td><td>97</td><td>95</td><td>93.4</td>
-    </tr>
-
-
     <!-- Closed-source -->
     <tr class="table-secondary">
       <td>Claude-3.7-Sonnet</td><td>30.68</td><td>24.72</td><td>28.15</td><td>23.12</td><td>54.46</td><td>31.21</td><td>11.18</td><td>29.07</td>
@@ -155,11 +149,6 @@
         paging: false,
         info:   false,
         fixedHeader: true
-      });
-  
-      /* 让 Experts 行始终置顶、不参与排序 */
-      table.on('order.dt draw.dt', function () {
-        $('#vqa-table tbody tr.expert-row').prependTo('#vqa-table tbody');
       });
     });
   </script>
